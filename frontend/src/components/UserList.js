@@ -1,16 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { deleteUser } from '../api';
 
 const UserList = ({ users, refreshUsers, setEditingUser, setError }) => {
+    const [localUsers, setLocalUsers] = useState(users);
+
+    useEffect(() => {
+        setLocalUsers(users);
+    }, [users]);
+
     const handleDelete = async (id) => {
-        if (window.confirm('Are you sure you want to delete this user?')) {
-            try {
-                await deleteUser(id);
-                refreshUsers();
-                setError('');
-            } catch (error) {
-                setError('Failed to delete user: ' + error.message);
-            }
+        if (!window.confirm('Are you sure you want to delete this user?')) return;
+
+        // Optimistically remove user from local state
+        setLocalUsers(prev => prev.filter(user => user.id !== id));
+
+        try {
+            await deleteUser(id);  // Backend deletion
+            refreshUsers();         // Sync with server
+            setError('');
+        } catch (error) {
+            setError('Failed to delete user: ' + error.message);
+            // Revert UI on error
+            refreshUsers();
         }
     };
 
