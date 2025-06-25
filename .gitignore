@@ -1,0 +1,15 @@
+# Node modules
+/frontend/node_modules/
+
+# Build output
+/frontend/build/
+
+# PHP vendor
+/backend/vendor/
+
+# Local env files
+**/.env
+
+# OS files
+.DS_Store
+*.log
