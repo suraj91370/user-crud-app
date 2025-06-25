@@ -27,7 +27,6 @@ function App() {
     refreshUsers();
   }, []);
 
-  // Clear editing state
   const clearEditing = () => {
     setEditingUser(null);
   };
@@ -39,7 +38,7 @@ function App() {
       {error && <div className="error">{error}</div>}
       
       <UserForm
-        key={editingUser ? editingUser.id : 'create'} // Important for form reset
+        key={editingUser ? editingUser.id : 'create'} 
         userToEdit={editingUser}
         refreshUsers={refreshUsers}
         setError={setError}

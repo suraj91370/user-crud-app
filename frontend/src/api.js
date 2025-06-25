@@ -1,15 +1,12 @@
 
 const API_URL = 'http://localhost/user-crud-app/backend/api';
 
-// Helper to handle API responses
 const handleResponse = async (response) => {
   const data = await response.json();
   
   if (!response.ok) {
-    // Extract backend error message or default
     let errorMsg = data.message || `API error: ${response.status}`;
     
-    // Include validation errors if available
     if (data.errors) {
       errorMsg += `: ${data.errors.join(', ')}`;
     }
@@ -20,7 +17,6 @@ const handleResponse = async (response) => {
   return data;
 };
 
-// Format date to YYYY-MM-DD
 const formatDate = (dateString) => {
   if (!dateString) return '';
   const date = new Date(dateString);
@@ -53,7 +49,6 @@ export const updateUser = async (id, userData) => {
     dob: formatDate(userData.dob)
   };
   
-  // Remove password if empty during update
   if (!payload.password) delete payload.password;
 
   const response = await fetch(`${API_URL}/update_user.php`, {

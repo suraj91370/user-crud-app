@@ -9,17 +9,16 @@ const UserForm = ({ userToEdit, refreshUsers, setError, clearEditing }) => {
     dob: ''
   });
 
-  // Initialize form when userToEdit changes
   useEffect(() => {
     if (userToEdit) {
       setFormData({
         name: userToEdit.name || '',
         email: userToEdit.email || '',
-        password: '', // Always empty for security
+        password: '', 
         dob: userToEdit.dob ? userToEdit.dob.split('T')[0] : ''
       });
     } else {
-      // Reset form when not editing
+
       setFormData({ name: '', email: '', password: '', dob: '' });
     }
   }, [userToEdit]);
@@ -32,7 +31,6 @@ const UserForm = ({ userToEdit, refreshUsers, setError, clearEditing }) => {
     e.preventDefault();
     setError('');
     
-    // Client-side validation
     if (!formData.name || !formData.email || !formData.dob) {
       setError('Name, Email, and Date of Birth are required');
       return;
@@ -44,7 +42,6 @@ const UserForm = ({ userToEdit, refreshUsers, setError, clearEditing }) => {
     }
 
     try {
-      // Prepare payload with properly formatted dob
       const payload = {
         ...formData,
         dob: new Date(formData.dob).toISOString().split('T')[0]
@@ -57,7 +54,7 @@ const UserForm = ({ userToEdit, refreshUsers, setError, clearEditing }) => {
       }
       
       refreshUsers();
-      if (userToEdit) clearEditing(); // Clear editing state after update
+      if (userToEdit) clearEditing(); 
     } catch (error) {
       console.error('Error saving user:', error);
       setError(error.message || 'Failed to save user');

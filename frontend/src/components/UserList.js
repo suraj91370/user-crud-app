@@ -11,16 +11,14 @@ const UserList = ({ users, refreshUsers, setEditingUser, setError }) => {
     const handleDelete = async (id) => {
         if (!window.confirm('Are you sure you want to delete this user?')) return;
 
-        // Optimistically remove user from local state
         setLocalUsers(prev => prev.filter(user => user.id !== id));
 
         try {
-            await deleteUser(id);  // Backend deletion
-            refreshUsers();         // Sync with server
+            await deleteUser(id);  
+            refreshUsers();         
             setError('');
         } catch (error) {
             setError('Failed to delete user: ' + error.message);
-            // Revert UI on error
             refreshUsers();
         }
     };

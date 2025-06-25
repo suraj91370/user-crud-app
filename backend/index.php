@@ -4,10 +4,9 @@ require_once 'cors.php';
 $request_uri = $_SERVER['REQUEST_URI'];
 $api_base = '/user-crud-app/backend/api/';
 
-// Route requests to appropriate API files
 if (strpos($request_uri, $api_base) === 0) {
     $endpoint = str_replace($api_base, '', $request_uri);
-    $endpoint = explode('?', $endpoint)[0]; // Remove query params
+    $endpoint = explode('?', $endpoint)[0]; 
 
     switch ($endpoint) {
         case 'create_user.php':
