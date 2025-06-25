@@ -5,7 +5,7 @@ const UserForm = ({ userToEdit, refreshUsers, setError, clearEditing }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: '',
+    passwords: '',
     dob: ''
   });
 
